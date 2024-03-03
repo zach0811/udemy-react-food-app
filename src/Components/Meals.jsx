@@ -20,9 +20,9 @@ export const Meals = () => {
 
   return (
     <div>
-      <ul id='meals'>
+      <ul id="meals">
         {meals.map((meal, index) => (
-          <MealCard key={meal.id}index={index} meal={meal}/>
+          <MealCard key={meal.id} index={index} meal={meal} />
         ))}
       </ul>
     </div>

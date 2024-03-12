@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { MealCard } from './MealCard';
+import { useHttp } from "../hooks/useHttp";
+import { MealCard } from "./MealCard";
+import { Error } from "./Error";
+
+const requestConfig = {};
 
 export const Meals = () => {
-  const [meals, setMeals] = useState([]);
+  const {
+    data: meals,
+    isLoading,
+    error,
+  } = useHttp("http://localhost:3000/meals", requestConfig, []);
 
-  useEffect(() => {
-    const fetchMeals = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/meals'); 
-        setMeals(response.data);
-      } catch (error) {
-        console.error('Error fetching meals:', error);
-      }
-    };
+  if (isLoading) {
+    return <p className="center">Fetching Meals....</p>;
+  }
 
-    fetchMeals();
-  }, []);
+  if (error) {
+    return <Error title="Failed To Fetch Meals" message={error} />;
+  }
 
   return (
     <div>
@@ -28,5 +29,3 @@ export const Meals = () => {
     </div>
   );
 };
-
-    
